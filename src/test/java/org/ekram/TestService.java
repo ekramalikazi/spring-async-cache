@@ -11,15 +11,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = "classpath:/applicationContext.xml")
 public class TestService {
 
-	@Autowired Service service;
+	@Autowired
+	Service service;
 
 	@Test
 	public void testCache() {
 
-		String response1 = service.cachedMethod1("param1","param2");
+		String response1 = service.cachedMethod1("param1", "param2");
 		System.out.println("eee1");
 		service.aSyncMethod(1);
 		service.aSyncMethod(2);
@@ -27,15 +28,13 @@ public class TestService {
 		System.out.println("eee2");
 		System.out.println("eee3");
 
-		String response2 = service.cachedMethod1("param1","param2");
+		String response2 = service.cachedMethod1("param1", "param2");
 
 		assertThat(response2, equalTo(response1));
 
-		String response3 = service.cachedMethod1("param1","param3");
+		String response3 = service.cachedMethod1("param1", "param3");
 		assertThat(response2, not(response3));
 		System.out.println("eee4");
 	}
 
 }
-
-

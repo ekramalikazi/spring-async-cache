@@ -7,69 +7,50 @@
 	<packaging>jar</packaging>
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 	<name>spring-async-cache</name>
+
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- <spring.version>3.1.2.RELEASE</spring.version> <aspectj.version>1.7.0</aspectj.version> -->
-		<spring.version>3.1.0.RELEASE</spring.version>
+
 		<aspectj.version>1.6.9</aspectj.version>
-		<java.version>1.6</java.version>
-		<slf4j.version>1.6.4</slf4j.version>
+		<!-- Spring -->
+		<spring.version>4.0.6.RELEASE</spring.version>
+		<org.springframework.security.version>3.2.4.RELEASE</org.springframework.security.version>
+
+		<!-- persistence -->
+		<hibernate.version>4.3.6.Final</hibernate.version>
+		<mysql-connector-java.version>5.1.31</mysql-connector-java.version>
+		<oracle-connector-java.version>11.2.0.1.0</oracle-connector-java.version>
+		<spring-data-jpa.version>1.6.2.RELEASE</spring-data-jpa.version>
+
+		<!-- marshalling -->
+
+		<jackson.version>2.4.1</jackson.version>
+
+		<!-- logging -->
+		<slf4j.version>1.7.7</slf4j.version>
+		<logback.version>1.1.2</logback.version>
+
+		<!-- various -->
+		<hibernate-validator.version>5.1.2.Final</hibernate-validator.version>
+
+		<!-- util -->
+		<guava.version>17.0</guava.version>
+		<commons-lang3.version>3.3.2</commons-lang3.version>
+
+		<!-- testing -->
+		<org.hamcrest.version>1.3</org.hamcrest.version>
+		<junit.version>4.11</junit.version>
+		<mockito.version>1.9.5</mockito.version>
+
+		<httpcore.version>4.3.2</httpcore.version>
+		<httpclient.version>4.3.5</httpclient.version>
+
+		<rest-assured.version>2.3.2</rest-assured.version>
+		
+		
+		<!-- ehcache -->
+		<ehcache.version>2.8.3</ehcache.version>
+
 	</properties>
-	<repositories>
-		<repository>
-			<id>repository.springsource.release</id>
-			<name>SpringSource GA Repository</name>
-			<url>http://repo.springsource.org/release</url>
-		</repository>
-		<repository>
-			<id>repository.springsource.milestone</id>
-			<name>SpringSource Milestone Repository</name>
-			<url>http://repo.springsource.org/milestone</url>
-		</repository>
-
-	</repositories>
-
-	<pluginRepositories>
-		<!-- For testing against latest Spring snapshots -->
-		<pluginRepository>
-			<id>org.springframework.maven.snapshot</id>
-			<name>Spring Maven Snapshot Repository</name>
-			<url>http://maven.springframework.org/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!-- For Spring releases -->
-		<pluginRepository>
-			<id>org.springframework.maven.release</id>
-			<name>Spring Maven Release Repository</name>
-			<url>http://maven.springframework.org/release</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!-- For developing against latest Spring milestones -->
-		<pluginRepository>
-			<id>org.springframework.maven.milestone</id>
-			<name>Spring Maven Milestone Repository</name>
-			<url>http://maven.springframework.org/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!-- For Tomcat plugin -->
-		<pluginRepository>
-			<id>sonatype-oss-repository</id>
-			<name>Sonatype Public OSS Repository</name>
-			<url>https://oss.sonatype.org/content/groups/public/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<dependencies>
 		<dependency>
@@ -174,67 +155,28 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<version>2.5.0</version>
-			<type>pom</type>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache</artifactId>
+		    <version>${ehcache.version}</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>org.springframework</groupId>
+		   <artifactId>spring-context-support</artifactId>
+		   <version>${spring.version}</version>
 		</dependency>
 
+
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.4</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjrt</artifactId>
-						<version>${aspectj.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjtools</artifactId>
-						<version>${aspectj.version}</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>test-compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<outxml>true</outxml>
-					<showWeaveInfo>false</showWeaveInfo>
-					<Xlint>warning</Xlint>
-					<verbose>false</verbose>
-					<aspectLibraries>
-						<aspectLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-aspects</artifactId>
-						</aspectLibrary>
-					</aspectLibraries>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.5</version>
 			</plugin>
 		</plugins>
 	</build>
