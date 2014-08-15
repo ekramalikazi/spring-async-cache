@@ -21,19 +21,23 @@ public class TestService {
 	public void testCache() {
 
 		String response1 = service.cachedMethod1("param1", "param2");
-		System.out.println("eee1");
-		service.aSyncMethod(1);
-		service.aSyncMethod(2);
-		service.aSyncMethod(3);
-		System.out.println("eee2");
-		System.out.println("eee3");
-
 		String response2 = service.cachedMethod1("param1", "param2");
 
 		assertThat(response2, equalTo(response1));
 
 		String response3 = service.cachedMethod1("param1", "param3");
 		assertThat(response2, not(response3));
+	}
+
+	@Test
+	public void testAsyn() {
+
+		System.out.println("eee1");
+		service.aSyncMethod(1);
+		service.aSyncMethod(2);
+		service.aSyncMethod(3);
+		System.out.println("eee2");
+		System.out.println("eee3");
 		System.out.println("eee4");
 	}
 

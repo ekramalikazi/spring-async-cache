@@ -12,7 +12,7 @@ public class ServiceImpl implements Service {
 	@Override
 	@Cacheable(value = "cache_1", key = "#p0.concat('-').concat(#p1)")
 	public String cachedMethod1(String param1, String param2) {
-		System.out.println("inside cachedMethod1...");
+		System.out.println("inside cachedMethod1..." + param1 + " - " + param2);
 		return cachedMethod2(param1 + param2);
 	}
 
@@ -25,7 +25,7 @@ public class ServiceImpl implements Service {
 	@Override
 	@Cacheable(value = "cache_1")
 	public String cachedMethod2(String param) {
-		System.out.println("inside cacheMethod2...");
+		System.out.println("inside cacheMethod2..." + param);
 		return param + new Random().nextInt();
 	}
 }
